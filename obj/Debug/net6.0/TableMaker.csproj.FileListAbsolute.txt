@@ -1,0 +1,15 @@
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\TableMaker.exe
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\TableMaker.deps.json
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\TableMaker.runtimeconfig.json
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\TableMaker.dll
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\ref\TableMaker.dll
+D:\development\Projects\other\TableMaker\bin\Debug\net6.0\TableMaker.pdb
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.csproj.AssemblyReference.cache
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.GeneratedMSBuildEditorConfig.editorconfig
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.AssemblyInfoInputs.cache
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.AssemblyInfo.cs
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.csproj.CoreCompileInputs.cache
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.dll
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\ref\TableMaker.dll
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.pdb
+D:\development\Projects\other\TableMaker\obj\Debug\net6.0\TableMaker.genruntimeconfig.cache
