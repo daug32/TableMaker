@@ -5,7 +5,8 @@ var table = new Table(
 );
 table.Prefix = table.Postfix = "|";
 table.SetRoundForAll(2);
-table.SetRound("W", 4);
+table.SetRound("W", 5);
+table.SetRound("dt", 6);
 
 table.AddRow(new float[] {1, 8,  1.08f, 6.75f, 0.120f * 0.001f});
 table.AddRow(new float[] {2, 10, 1.50f, 8.16f, 0.114f * 0.001f});
