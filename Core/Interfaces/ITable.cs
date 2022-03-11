@@ -2,6 +2,9 @@ namespace Learning.Table
 {
     public interface ITable
     {
+        string Postfix { get; set; }
+        string Prefix { get; set; }
+
         // Calculates values for each element in a column by using function
         // of this type
         void Calculate(string targetColumn, TableFunction function);
@@ -18,8 +21,6 @@ namespace Learning.Table
         void AddColumns(string[] columns);
         // Creates a column with this name
         void AddColumn(string column);
-        // Creates a column with this name and sets its values
-        void AddColumn(string column, List<string> values);
         // Check whether column with name exists or not
         bool ColumnExists(string column);
 

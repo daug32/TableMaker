@@ -2,21 +2,19 @@ namespace Learning.Table
 {
     public class Table : ITable
     {
-        private List<Column> _data;
-        private int _count = 0; 
-        public string Postfix = "";
-        public string Prefix = "";
+        private List<IColumn> _data;
+        private int _count; 
+        public string Postfix { get; set; }
+        public string Prefix { get; set; }
+
         public Table()
         {
             _data = new();
-        }
-        public Table(string[] columns)
-        {
-            _data = new();
-            AddColumns(columns);
+            _count = 0;
+            Postfix = Prefix = "|";
         }
         
-#region columns
+        // Add new columns 
         public void AddColumns(string[] columns)
         {
             var count = columns.Count();
@@ -25,6 +23,8 @@ namespace Learning.Table
                 AddColumn(columns[i]);
             }
         }
+
+        // Add new column 
         public void AddColumn(string column)
         {
             if(ColumnExists(column))
@@ -34,15 +34,8 @@ namespace Learning.Table
 
             _data.Add(new Column(column));
         }
-        public void AddColumn(string column, List<string> values)
-        {   
-            AddColumn(column);
-            
-            var col = _data.Last();
 
-            int index = 0;
-            values.ForEach(el => col.SetValue(el, index++));
-        }
+        // Check wheter column with this name exists or not
         public bool ColumnExists(string column)
         {
             if(String.IsNullOrEmpty(column))
@@ -52,28 +45,14 @@ namespace Learning.Table
 
             return !(_data.TrueForAll(el => el.Name != column));
         }
-#endregion columns
 
-#region add value(s)
-        public void AddValue(string column, string value)
-        {
-            SetValue(column, _count, value);
-        }
-        public void AddValue(string column, float value)
-        {
-            AddValue(column, value.ToString());
-        }
-        public void AddRow(string[] values)
-        {
-            SetRow(_count, values);
-        }
-        public void AddRow(float[] values)
-        {
-            SetRow(_count, values);
-        }
-#endregion add value(s)
-        
-#region set value(s)
+        public void AddValue(string column, string value) => SetValue(column, _count, value);
+        public void AddValue(string column, float value) => AddValue(column, value.ToString()); 
+        public void AddRow(string[] values) => SetRow(_count, values); 
+        public void AddRow(float[] values) => SetRow(_count, values); 
+        public void SetValue(string column, int index, float value) => SetValue(column, index, value.ToString());
+        public void SetRoundForAll(int round) => _data.ForEach(el => el.SetRound(round)); 
+
         public void SetRow(int index, string[] values)
         {
             var valuesCount = values.Count();
@@ -88,6 +67,7 @@ namespace Learning.Table
                 SetValue(_data[i].Name, index, values[i]);
             }
         }     
+        
         public void SetRow(int index, float[] values)
         {
             var valuesCount = values.Count();
@@ -102,6 +82,7 @@ namespace Learning.Table
                 SetValue(_data[i].Name, index, values[i].ToString());
             }
         }     
+
         public void SetValue(string column, int index, string value)
         {
             if(!ColumnExists(column))
@@ -122,13 +103,7 @@ namespace Learning.Table
                     _data[i].SetValue(value, index);
             }
         }
-        public void SetValue(string column, int index, float value)
-        {
-            SetValue(column, index, value.ToString());
-        }
-#endregion set value(s)
 
-#region other
         public void Calculate(string targetColumn, ITable.TableFunction function)
         {
             if(!ColumnExists(targetColumn)) 
@@ -143,10 +118,7 @@ namespace Learning.Table
                 SetValue(targetColumn, i, function(props));                
             }
         }
-        public void SetRoundForAll(int round)
-        {
-            _data.ForEach(el => el.SetRound(round));
-        }
+
         public void SetRound(string column, int round)
         {
             if(!ColumnExists(column))
@@ -158,6 +130,7 @@ namespace Learning.Table
                 if(_data[i].Name == column) _data[i].SetRound(round);
             }
         }
+
         public override string ToString()
         {
             var result = "";
@@ -176,7 +149,5 @@ namespace Learning.Table
 
             return result;
         }
-#endregion other
-    
     }
 }

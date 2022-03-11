@@ -2,6 +2,10 @@ namespace Learning.Table
 {
     public interface IColumn
     {
+        string Name { get; } 
+        int Width { get; }
+        int Round { get; }
+
         void SetValue(string value, int index);
         void SetValue(float value, int index);
         

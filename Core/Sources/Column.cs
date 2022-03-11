@@ -5,8 +5,9 @@ namespace Learning.Table
         public string Name { get; private set; }
         public int Width { get; private set; }
         public int Round  { get; private set; }
-        private List<string> _values;
         public string DefaultValue { get; set; }
+        private List<string> _values;
+        
         public Column(string name)
         {
             if(String.IsNullOrEmpty(name)) 
@@ -19,6 +20,11 @@ namespace Learning.Table
             _values = new();
             DefaultValue = "0";
         }
+
+        public void SetRound(int round) => Round = round;
+
+        public void SetValue(float value, int index) => SetValue(value.ToString(), index);
+
         public void SetValue(string value, int index)
         {
             if(index < 0) 
@@ -37,10 +43,7 @@ namespace Learning.Table
             value = temp.ToString();
             if(value.Length > Width) Width = value.Length;
         }
-        public void SetValue(float value, int index)
-        {
-            SetValue(value.ToString(), index);
-        }
+
         public string GetValue(int index)
         {
             if(index < 0)
@@ -56,16 +59,14 @@ namespace Learning.Table
             
             return result;
         }
+
         public float GetValueF(int index)
         {
             var value = GetValue(index);
             var result = StringToFloat(value);
             return result;
         }
-        public void SetRound(int round)
-        {
-            Round = round;
-        }
+
         public string PrintName()
         {
             var result = Name;
@@ -75,6 +76,7 @@ namespace Learning.Table
             }
             return result;
         }
+
         public string PrintValue(int index)
         {
             var value = GetValueF(index);
@@ -87,6 +89,7 @@ namespace Learning.Table
 
             return str;
         }
+
         private float StringToFloat(string value)
         {
             value = value.Replace(',', '.');
