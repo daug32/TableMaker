@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Learning.Table
+namespace TableMaker
 {
     public class Table : ITable
     {

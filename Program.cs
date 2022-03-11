@@ -1,12 +1,13 @@
 ﻿using System;
-using Learning.Table;
+using TableMaker;
 using System.Collections.Generic;
 
-namespace TableMaker
+namespace PhysicLabs
 {
     class Program
     {
         public static ITable Table = new Table();
+
         public static void Main()
         {
             FillTable();

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Learning.Table
+namespace TableMaker
 {
     class Column : IColumn
     {
@@ -25,7 +25,7 @@ namespace Learning.Table
         }
 
         public void SetRound(int round) => Round = round;
-
+        public float GetValueF(int index) => StringToFloat(GetValue(index));
         public void SetValue(float value, int index) => SetValue(value.ToString(), index);
 
         public void SetValue(string value, int index)
@@ -63,13 +63,6 @@ namespace Learning.Table
             return result;
         }
 
-        public float GetValueF(int index)
-        {
-            var value = GetValue(index);
-            var result = StringToFloat(value);
-            return result;
-        }
-
         public string PrintName()
         {
             var result = Name;
@@ -101,8 +94,7 @@ namespace Learning.Table
             var culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
             culture.NumberFormat.NumberDecimalSeparator = ".";
 
-            float temp = float.Parse(value, culture);
-            return temp;
+            return float.Parse(value, culture);
         }
     }
 }
