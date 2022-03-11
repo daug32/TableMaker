@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Learning.Table
 {
     public class Table : ITable
@@ -17,7 +20,7 @@ namespace Learning.Table
         // Add new columns 
         public void AddColumns(string[] columns)
         {
-            var count = columns.Count();
+            var count = columns.Length;
             for(int i = 0; i < count; i++)
             {
                 AddColumn(columns[i]);
@@ -55,8 +58,8 @@ namespace Learning.Table
 
         public void SetRow(int index, string[] values)
         {
-            var valuesCount = values.Count();
-            var columnsCount = _data.Count();
+            var valuesCount = values.Length;
+            var columnsCount = _data.Count;
             if(valuesCount > columnsCount)
             {
                 throw new ArgumentException("Number of values is more then number of columns");
@@ -70,8 +73,8 @@ namespace Learning.Table
         
         public void SetRow(int index, float[] values)
         {
-            var valuesCount = values.Count();
-            var columnsCount = _data.Count();
+            var valuesCount = values.Length;
+            var columnsCount = _data.Count;
             if(valuesCount > columnsCount)
             {
                 throw new ArgumentException("Number of values is more then number of columns");
@@ -96,7 +99,7 @@ namespace Learning.Table
             
             if(_count <= index) _count = index + 1;
 
-            var count = _data.Count();
+            var count = _data.Count;
             for(int i = 0; i < count; i++)
             {
                 if(_data[i].Name == column)

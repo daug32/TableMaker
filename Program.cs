@@ -1,20 +1,21 @@
-﻿using Learning.Table;
+﻿using System;
+using Learning.Table;
+using System.Collections.Generic;
 
 namespace TableMaker
 {
     class Program
     {
-        public static ITable Table;
+        public static ITable Table = new Table();
         public static void Main()
         {
-            CreateTable();
+            FillTable();
             CalculateValues();
             Console.WriteLine(Table);
         }
-        
-        private static void CreateTable()
+
+        private static void FillTable()
         {
-            Table = new Table();
             Table.AddColumns(new string[] {"N", "a", "a1", "a2", "dt", "V1", "U1", "U2", "Ke", "Kv", "W", "F"});
 
             Table.SetRoundForAll(2);
@@ -39,12 +40,11 @@ namespace TableMaker
             Table.Calculate("U1", ( Dictionary<string, float> p) => CalculateVehicle(p["a1"]) );
             Table.Calculate("U2", ( Dictionary<string, float> p) => CalculateVehicle(p["a2"]) );
 
-            Table.Calculate("Ke", ( Dictionary<string, float> p) => ( Square(p["U2"]) + Square(p["U1"]) ) / Square(p["V1"]) );
+            Table.Calculate("F",  ( Dictionary<string, float> p) => (p["V1"] - p["U1"]) * m / p["dt"] );
             Table.Calculate("Kv", ( Dictionary<string, float> p) => MathF.Abs( (p["U2"] - p["U1"] ) / p["V1"]) );
+            Table.Calculate("Ke", ( Dictionary<string, float> p) => ( Square(p["U2"]) + Square(p["U1"]) ) / Square(p["V1"]) );
+            Table.Calculate("W",  ( Dictionary<string, float> p) => 0.25f * m * (Square(p["V1"]) - Square(p["U1"]) - Square(p["U2"])) );
 
-            Table.Calculate("W", ( Dictionary<string, float> p) => 0.25f * m * (Square(p["V1"]) - Square(p["U1"]) - Square(p["U2"])) );
-
-            Table.Calculate("F", ( Dictionary<string, float> p) => (p["V1"] - p["U1"]) * m / p["dt"] );
         }
     }
 }

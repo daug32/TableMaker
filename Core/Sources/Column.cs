@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Learning.Table
 {
     class Column : IColumn
@@ -32,7 +35,7 @@ namespace Learning.Table
                 throw new ArgumentException("Index can't be less then 0");
             }
             
-            for(int i = _values.Count(); i <= index; i++)
+            for(int i = _values.Count; i <= index; i++)
             {
                 _values.Add(DefaultValue);
             }

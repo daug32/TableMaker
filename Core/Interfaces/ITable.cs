@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Learning.Table
 {
     public interface ITable
