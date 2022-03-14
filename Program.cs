@@ -16,35 +16,56 @@ namespace TableMaker
 
         private static void FillTable()
         {
-            Table.AddColumns(new string[] {"N", "a", "a1", "a2", "dt", "V1", "U1", "U2", "Ke", "Kv", "W", "F"});
+            var columns = new string[]  {"h",           "d",           "mD",         "t"};
+            var row1 = new float[]      {40.1f * 0.01f, 10.4f * 0.01f, 258 * 0.001f, 2.266f}; 
+            var row2 = new float[]      {40.1f * 0.01f, 10.4f * 0.01f, 389 * 0.001f, 2.347f};
+            var row3 = new float[]      {40.1f * 0.01f, 10.4f * 0.01f, 527 * 0.001f, 2.430f};
 
-            Table.SetRoundForAll(2);
-            Table.SetRound("W", 4);
-            Table.SetRound("dt", 6);
+            // Basic columns
+            Table.AddColumns(columns);
+            // Calculatable columns
+            Table.AddColumns(new string[] {"J", "P", "T", "100 * P/T"});
 
-            Table.AddRow(new float[] {1, 8,  1.08f, 6.75f, 0.120f * 0.001f});
-            Table.AddRow(new float[] {2, 10, 1.50f, 8.16f, 0.114f * 0.001f});
-            Table.AddRow(new float[] {3, 12, 2.58f, 9.50f, 0.113f * 0.001f});
+            Table.SetRoundForAll(4);
+
+            Table.AddRow(row1);
+            Table.AddRow(row2);
+            Table.AddRow(row3);
         }
 
         private static void CalculateValues()
         {
-            var length = 0.36f;
-            var m = 44.3f * 0.001f;
+            float mK = 124 * 0.001f;
+            float mO =  33 * 0.001f;
 
-            float Square(float value) => value * value; 
-            float Radians(float degrees) => degrees * MathF.PI / 180;
-            float CalculateVehicle(float degrees) => 2 * MathF.Sqrt(10 * length) * MathF.Sin(0.5f * Radians(degrees));
+            float rD = 0.0435f;
+            float rK = 0.0520f;
+            float rO = 0.0045f;
 
-            Table.Calculate("V1", ( Dictionary<string, float> p) => CalculateVehicle(p["a"]) );
-            Table.Calculate("U1", ( Dictionary<string, float> p) => CalculateVehicle(p["a1"]) );
-            Table.Calculate("U2", ( Dictionary<string, float> p) => CalculateVehicle(p["a2"]) );
+            Table.Calculate("J", (Dictionary<string, float> p) => 0.5f * (p["mD"] * (rD*rD + rO*rO) + mK * (rK*rK + rD*rD) + mO * rO*rO)); 
 
-            Table.Calculate("F",  ( Dictionary<string, float> p) => (p["V1"] - p["U1"]) * m / p["dt"] );
-            Table.Calculate("Kv", ( Dictionary<string, float> p) => MathF.Abs( (p["U2"] - p["U1"] ) / p["V1"]) );
-            Table.Calculate("Ke", ( Dictionary<string, float> p) => ( Square(p["U2"]) + Square(p["U1"]) ) / Square(p["V1"]) );
-            Table.Calculate("W",  ( Dictionary<string, float> p) => 0.25f * m * (Square(p["V1"]) - Square(p["U1"]) - Square(p["U2"])) );
+            Table.Calculate("P", (Dictionary<string, float> p) => (p["mD"] + mK + mO) * 10 * p["h"]);
+            
+            Table.Calculate("T", (Dictionary<string, float> p) => 
+            {
+                var m = (p["mD"] + mK + mO);
+                var dd = (2*rO) * (2*rO);
 
+                var result = 2 * (p["h"] * p["h"]) / (p["t"] * p["t"]);
+                System.Console.WriteLine("2 * (hh) / (tt) = result");
+                System.Console.WriteLine($"2 * ({ p["h"] } * { p["h"] }) / ({ p["t"] } * { p["t"] }) = { result }");;
+
+                var result2 = m + 4 * p["J"] / dd;
+                System.Console.WriteLine("m + 4 * J / dd = result");
+                System.Console.WriteLine($"{m} + 4 * { p["J"] } / {dd} = { result2 }");
+
+                System.Console.WriteLine(result * result2);
+                System.Console.WriteLine();
+
+                return result * (m + 4 * p["J"] / dd);
+            });
+            
+            Table.Calculate("100 * P/T", (Dictionary<string, float> p) => 100f * p["P"] / p["T"]);
         }
     }
 }
