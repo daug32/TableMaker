@@ -1,5 +1,6 @@
 # TableMaker
 Console application that makes pretty tables, calculates and rounds values
+A budget version of Excel in console :D
 
 <img src="Picture.png" />
 
